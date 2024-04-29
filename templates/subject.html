@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static',filename='style1.css')}}" class="style">
+
+  <div class="color"></div>
+  <form name="sentMessage" id="SubjectForm" action="/templates/subject.html" method="post" novalidate>
+    <div class="subject-container">
+    <table>
+      <tr>
+        <td> <label for="dish ">Level:   </label>
+         
+          </td>
+          <td><select name="dish" id="dish">
+            <option value="UNDER GRADUATE"> UNDER GRADUATE </option>
+            <option value="SECOND YEAR DIRECT"> SECOND YEAR DIRECT</option>
+            <option value="POST GRADUATE"> POST GRADUATE</option>
+            <option value="FOURTH YEAR DIRECT"> FOURTH YEAR DIRECT</option>
+            <option value="DICTORAL"> DICTORAL</option>
+        
+        </select></td>
+      </tr>
+      <tr>
+        <td> <div id="cc">
+          <label for="course ">Course:   </label>
+          
+           
+            <td> <select name="course" id="course">
+              <option value="INFORMATION TECHNOLOGY">INFORMATION TECHNOLOGY</option>
+              <option value="COMPUTER ENGINEERING"> COMPUTER ENGINEERING</option>
+              <option value="ELECTRONICS AND TELECOMMUNICATION ENGINEERING"> ELECTRONICS AND TELECOMMUNICATION ENGINEERING</option>
+              <option value="ELECTRONICS AND COMPUTER SCIENCE"> ELECTRONICS AND COMPUTER SCIENCE</option>
+              <option value="ELECTRONICS ENGINEERING"> ELECTRONICS ENGINEERING</option>
+              <option value="BIOMED ENGINEERING"> BIOMED ENGINEERING</option>
+          
+          </select ></td>
+        </div>
+       
+       </td>
+      </tr>
+      <tr>
+        <td> <label for=" sem">Semester:   </label>
+          </td>
+          <td>
+          
+            <select name="sem" id="sem">
+                <option value="SEMESTER I"> SEMESTER I</option>
+                <option value="SEMESTER II"> SEMESTER II</option>
+                <option value="SEMESTER III"> SEMESTER III</option>
+                <option value="SEMESTER IV"> SEMESTER IV</option>
+                <option value="SEMESTER V"> SEMESTER V</option>
+                <option value="SEMESTER VI"> SEMESTER VI</option>
+                <option value="SEMESTER VII"> SEMESTER VII</option>
+                <option value="SEMESTER VIII"> SEMESTER VIII</option>
+            
+            </select></td>
+      </tr>
+      <tr>
+        <td> <div id="sy">  <label for="syllabus ">Syllabus:   </label>
+         
+          </td>
+          <td>
+             
+          <select name="syllabus" id="syllabus">
+            <option value="AUTO REV. 23 PLUS ">AUTO REV. 23 PLUS   </option>
+            <option value="AUTO REV. 23 PURE"> AUTO REV. 23 PURE</option>
+            <option value="AUTONOMY 2022">AUTONOMY 2022 </option>
+            <option value="AUTONOMY 2022 PLUS"> AUTONOMY 2022 PLUS</option>
+             <option value="OLD 1999">OLD 1999 </option>
+            <option value="REVISED 2001"> REVISED 2001</option>
+            <option value="REVISED 2007">  REVISED 2007</option>
+            <option value="REVISED 2012"> REVISED 2012</option>
+        
+        </select></div></form>
+  
+          </td>
+      </tr>
+    </table>
+    
+
+   
+</div>
+
+<button type="submit" class="button" id="sendMessageButton">Confirm</button>
+    
+{% endblock %}

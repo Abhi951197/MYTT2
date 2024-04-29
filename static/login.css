@@ -1,0 +1,142 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: auto;
+    display: flex;
+   color: black;
+    justify-content: center;
+   height: 100vh;
+  width: 100vw;
+   position: relative;
+  
+   background-size: cover;
+background-position: center;
+backdrop-filter: blur(20px);
+   
+  
+}
+img{
+    min-width:100vw;
+    
+}
+
+.container {
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position:absolute;
+    width:320px;
+    height: 350px;
+    align-self: center;
+     color:white;
+      background: transparent;
+      background-image: linear-gradient( 179deg,  rgba(0,0,0,1) 9.2%, rgba(127,16,16,1) 103.9% );
+
+
+}
+
+input#email {
+    color: white;
+}
+input#password{
+    color: white;
+}
+
+.container #svg1{
+    position: absolute;
+    top:33%;
+    right:10%;
+}
+    
+.container #svg2{
+    position: absolute;
+    top:56%;
+    right:-2%;
+    color: rgb(244, 242, 240);
+
+}
+.container a{
+    color: black;
+    text-decoration: none;
+}
+.container a:hover{
+
+    text-decoration: underline;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+input {
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent;
+}
+
+input#submit {
+    padding: 10px;
+    background-color:black;
+    color:black;
+    border: 2px solid ;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 17px;
+    margin-left: 90px;
+
+}
+
+input#submit:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.options {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+input#submit {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    top:80%;
+    left:10%;
+    position:absolute;
+}
+.signup-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    top:90%;
+    left:50%;
+    position:absolute;
+}
+
+
+#signup{
+    color: rgb(249, 247, 244);
+}
+.signup-btn {
+    background-color: #3498db;
+}
+
+input#submit :hover,
+.signup-btn:hover {
+    opacity: 0.8;
+}
+#login{
+    color: white;
+}

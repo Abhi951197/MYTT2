@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn btn-primary" id="add-subject">Add Subject</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#add-subject').click(function() {
+                $.ajax({
+                    url: '/templates/subject_button.html',
+                    method: 'POST',
+                    success: function(response) {
+                        // Append the new subject button to the container
+                        $('#subject-container').append(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+
+</html>

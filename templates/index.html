@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask-Dropzone Demo: Drag and Drop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" class="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}" class="style">
+   
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/"><h2 id="h2">EduPlanner </h2></a> 
+         <div ><ul >
+             <li class="list">
+                <a href="       "></a>
+                <a href="       "></a>
+                <a href="       "></a>
+                <a href="       "></a>
+
+
+
+                <a  href="{{ url_for('main') }}"> Home</a>
+
+                <a href="{{ url_for('submit_subject') }}">Subjects</a>
+
+                 <a href="{{ url_for('table1') }}">Timetable</a>
+                 <a href="">Profile</a>
+                <a href="#contact">Contacts</a>
+     
+             </li>
+             
+         </ul>   
+            
+         </div>
+        
+     </nav>
+<div class="container">
+           
+   
+    
+    <table class="sub_list">
+        <tr>
+            <th id="sub">Subject Lists</th>
+        </tr>
+    
+        {% for post in slots_data %}
+        <tr>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_' ~ loop.index }}" data-toggle="dropdown">{{ post.subject_slot }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_' ~ loop.index }}">
+                        {% for entry in slots_data %}
+                        {% if enrollment_status[entry.id] == 'full' %}
+                            <li class="text-danger" id="{{ 'option_' ~ loop.index ~ '_' ~ loop.index2 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ entry.slot_data }}', '{{ 'menu_' ~ loop.index }}', true)">{{ entry.slot_data }}</li>
+                        {% else %}
+                            <li id="{{ 'option_' ~ loop.index ~ '_' ~ loop.index2 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ entry.slot_data }}', '{{ 'menu_' ~ loop.index }}', false)">{{ entry.slot_data }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                        {% for slot_data_entry in slot_data_entries %}
+                            {% if enrollment_status[slot_data_entry.id] == 'full' %}
+                                <li class="text-danger" id="{{ 'option_' ~ loop.index ~ '_' ~ loop.index2 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ slot_data_entry.slot_data }}', '{{ 'menu_' ~ loop.index }}')">{{ slot_data_entry.slot_data }}</li>
+                            {% else %}
+                                <li id="{{ 'option_' ~ loop.index ~ '_' ~ loop.index2 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ slot_data_entry.slot_data }}', '{{ 'menu_' ~ loop.index }}')">{{ slot_data_entry.slot_data }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+            </td>
+        </tr>
+        {% endfor %}
+        
+        
+        
+        {% for subject in subjects %}
+        <tr class="tr2">
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_subject_' ~ subject.id }}" data-toggle="dropdown">{{ subject.subject }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_subject_' ~ subject.id }}">
+                        {% for entry in subjects %}
+                        <li id="{{ 'option_subject_' ~ subject.id }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ entry.slot_data }}', '{{ 'menu_subject_' ~ subject.id }}')">{{ entry.slot_data }}</li>
+                        {% endfor %}
+                        {% for Cn in Cnl %}
+                        <li id="{{ 'option_subject_' ~ subject.id }}" role="presentation" draggable="true" ondragstart="dragOption(event,  '{{ Cn.slot_data }}', '{{ 'menu_subject_' ~ subject.id }}')">{{ Cn.slot_data }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% for EM4sub in EM4_sub %}
+        <tr class="tr3">
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_' ~ loop.index3 }}" data-toggle="dropdown">{{ EM4sub.subject }}
+                    
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_' ~ loop.index3 }}">
+                        {% for entry in EM4_sub %}
+                        <li id="{{ 'option_' ~ loop.index3 ~ '_' ~ loop.index3 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ entry.slot_data }}', '{{ 'menu1_' ~ loop.index3 }}')">{{ entry.slot_data }}</li>
+
+                       
+                        {% endfor %}
+                        {% for EM4slot in EM4slots %}
+                        <li id="{{ 'option_' ~ loop.index3 ~ '_' ~ loop.index3 }}" role="presentation" draggable="true" ondragstart="dragOption(event,  '{{ EM4slot.slot_data }}', '{{ 'menu1_' ~ loop.index3 }}')">{{ EM4slot.slot_data }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        
+        {% for OSsub in OS_sub %}
+        <tr>
+            <td>
+                <div class="dropdown" >
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_' ~ loop.index1 }}" data-toggle="dropdown">{{ OSsub.subject }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_' ~ loop.index1 }}">
+                        {% for entry in OS_sub %}
+                        <li  id="{{ 'option_OSsub' ~ loop.index1 ~ '_' ~ loop.index1 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ entry.slot_data }}', '{{ 'menu_OSsub' ~ loop.index1 }}')">{{ entry.slot_data }} </li>
+                        {% endfor %}
+                        {% for slot_data_entry in OSTslots %}
+                            <li id="{{ 'option_OSsub' ~ loop.index1 ~ '_' ~ loop.index1 }}" role="presentation" draggable="true" ondragstart="dragOption(event, '{{ slot_data_entry.slot_data }}', '{{ 'menu_OSsub' ~ loop.index1 }}')">{{ slot_data_entry.slot_data }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+  
+    <button id="delete-option" class="btn btn-danger" style="margin-top: 10px;">Clear all</button>
+</div>
+
+<div class="contakiner">
+    <div id="dropzone" class="dropzone" ondrop="dropOption(event)" ondragover="allowDrop(event)">
+        <h3>Selected Options</h3>
+        <ul id="selected-options" class="list-unstyled">
+            {% for option in selected_options %}
+            {% if option in enrolled_twice %}
+            <li style="color: red;">{{ option }} 
+            {% else %}
+            <li>{{ option }} 
+            {% endif %}
+            <form method="post" action="{{ url_for('delete_option') }}">
+                <input type="hidden" name="option_to_delete" value="{{ option }}">
+                <button type="submit" class="btn btn-xs btn-danger">Delete</button>
+            </form> 
+            </li>
+            {% endfor %}
+          </ul>
+          <form id="enroll-form" method="POST" action="{{ url_for('enroll') }}">
+            <!-- Hidden input fields to store selected options -->
+            {% for option in selected_options %}
+            <input type="hidden" name="selected_options[]" value="{{ option }}">
+            {% endfor %}
+            <button class="btn btn-default" type="submit" id="enroll">Enroll</button>
+        </form>
+        {% if option %}
+        <a href="{{ url_for('slot_enrollment', slot_data=option.split(':')[1], day=option.split(' ')[2], time=option.split(' ')[3], room=option.split(' ')[4]) }}">View users enrolled for {{ selected_option }}</a>
+    {% else %}
+        <p></p>
+    {% endif %}
+    </div>
+    <div class="flash"  >
+        <!-- Flash messages modal -->
+        <div class="modal fade" id="flashMessagesModal" tabindex="-1" role="dialog" aria-labelledby="flashMessagesModalLabel">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                  
+
+                    <div class="modal-body">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% if message %}
+                                    <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% if refresh %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Beware!</strong> The page has been refreshed.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#flashMessagesModal').modal('show');
+    });
+    var selectedOptions = {}; 
+
+    function dragOption(ev, option, dropdownId, isEnrolledTwice) {
+        ev.dataTransfer.setData("text", option);
+        ev.dataTransfer.setData("dropdownId", dropdownId); 
+        ev.dataTransfer.setData("isEnrolledTwice", isEnrolledTwice); // Pass whether the option is enrolled twice
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function dropOption(ev) {
+        ev.preventDefault();
+        var option = ev.dataTransfer.getData("text");
+        var dropzone = document.getElementById("selected-options"); 
+        var dropdownId = ev.dataTransfer.getData("dropdownId"); 
+        var isEnrolledTwice = ev.dataTransfer.getData("isEnrolledTwice") === "true"; // Convert string to boolean
+
+        if (!selectedOptions[dropdownId]) {
+            selectedOptions[dropdownId] = option;
+            var card = document.createElement("div");
+            card.classList.add("continer"); // Add Bootstrap container class
+            var img = document.createElement("img");
+            img.src = "/static/dash-1.jpg"; 
+            var p = document.createElement("p");
+            p.textContent = option; // Set text content to the selected option
+
+            card.appendChild(img);
+            card.appendChild(p);
+
+            // Set the card color based on whether the option is enrolled twice
+            if (isEnrolledTwice) {
+                card.style.backgroundColor = "red";
+            }
+            
+            // Create delete button
+            var deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.classList.add("btn", "btn-xs", "btn-danger");
+            // Add an onclick event handler to delete this specific option
+            deleteButton.onclick = function() {
+                deleteOption(option, dropdownId);
+                // Remove the corresponding card element when deleting the option
+                card.remove();
+            };
+
+            card.appendChild(deleteButton);
+
+            dropzone.appendChild(card);
+            document.getElementById(dropdownId).disabled = true;
+            document.getElementById(dropdownId).querySelectorAll("li").forEach(function(liElement) {
+                if (liElement.innerText.trim() === option) {
+                    liElement.disabled = true;
+                }
+            });
+        } else {
+            alert("Option already selected from this dropdown! Please select a different option.");
+        }
+    }
+    
+    function deleteOption(option, dropdownId) {
+        delete selectedOptions[dropdownId];
+        // Re-enable the corresponding dropdown menu item
+        document.getElementById(dropdownId).disabled = false;
+    }
+
+    /**
+     * Disables dropdown options when the selected count reaches the specified limit.
+     */
+    function disableOptionsWhenLimitReached() {
+        // Set your limit here
+        const limit = 2;
+
+        // Query all dropdown menus
+        const dropdowns = document.querySelectorAll(".dropdown-menu");
+
+        // Iterate through each dropdown
+        dropdowns.forEach((dropdown) => {
+            // Query all options in the dropdown
+            const options = dropdown.querySelectorAll("li[draggable='true']");
+
+            // Iterate through each option
+            options.forEach((option) => {
+                // Get the data attribute containing the number of enrolled users for this option
+                const enrolledUsersCount = parseInt(option.dataset.enrolledUsersCount || 0);
+
+                // If the number of enrolled users for this option is greater than or equal to the limit
+                if (enrolledUsersCount >= limit) {
+                    // Disable the option
+                    option.disabled = true;
+                }
+            });
+        });
+    }
+
+    // Call the function to disable options when the page loads
+    window.onload = disableOptionsWhenLimitReached;
+
+    $('#delete-option').click(function () {
+        $('#selected-options').empty();
+        selectedOptions = {};
+        disableOptionsWhenLimitReached(); // Call the function after deleting options
+    });
+
+    $('#enroll-form').submit(function (event) {
+        // Clear any previous errors
+        $('#error-message').remove();
+        // Check if no options are selected
+        if (Object.keys(selectedOptions).length === 0) {
+            // Prevent form submission
+            event.preventDefault();
+            // Show error message
+            $('#enroll-form').append('<p id="error-message" style="color: red;">Please select at least one option</p>');
+        } else {
+            // If options are selected, populate the hidden input fields
+            $('#enroll-form').empty(); // Clear previous hidden fields
+            for (const option in selectedOptions) {
+                $('#enroll-form').append(`<input type="hidden" name="selected_options[]" value="${selectedOptions[option]}">`);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

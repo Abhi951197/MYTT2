@@ -1,0 +1,98 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Timetable</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" class="style">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}" class="style">
+        <style>
+            .card1 {
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                width: 300px;
+                height: fit-content;
+                border: 1px solid black;
+                display: inline-block;
+            }
+            .card1 p {
+                margin: 0;
+                font-size: 16px;
+            }
+            img{
+                width:100%;
+                border-bottom: 1px solid black;
+            }
+            .print-button {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                
+                .card1-container, .card1-container * {
+                    visibility: visible;
+                }
+                .card1-container {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+                .print-button{
+                    visibility: hidden;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="/"><h2 id="h2">EduPlanner </h2></a> 
+            <div ><ul >
+                <li class="list">
+                    <a href="/">Home</a>
+                    <a href="{{ url_for('submit_subject') }}">Subjects</a>
+                    <a href="{{ url_for('table') }}">Timetable</a>
+                    <a href="">Profile</a>
+                    <a href="#contact">Contacts</a>
+                </li>
+            </ul>   
+            </div>
+        </nav>
+        <h3>Enrolled Options</h3>
+        
+        <div class="card1-container">
+            {% for option in enrolled_options %}
+            <!-- Check if the user email associated with the option matches the email of the current user -->
+            {% if option.user == current_user.email %}
+                <!-- Print the user email for debugging purposes -->
+                <div>User Email: {{ option.user }}, Current User Email: {{ current_user.email }}</div>
+                <!-- Loop through the selected options and display each one -->
+                {% for item in option.selected_options.split(',') %}
+                    <div class="card1">
+                        <img src="/static/dash-1.jpg" alt=""/>
+                        <p>{{ item.strip() }} - </p>
+                        <p>Enrolled on {{ option.date }}</p>
+                        <!-- Add a form or button here for deleting options if needed -->
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+            <button class="print-button" onclick="printPage()">Print</button>
+
+        </div>
+        <script>
+            function printPage() {
+            window.print(); 
+            }
+        </script>
+    </body>
+    </html>

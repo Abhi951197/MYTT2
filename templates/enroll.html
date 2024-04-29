@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enrolled Options</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" class="style">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}" class="style">
+    <style>
+        table, td, th {
+            max-width: fit-content;
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        td{
+          width:170px;
+        }
+        
+        .print-button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          position: absolute;
+          top:90%;
+          left: 90%;
+      }
+      @media print {
+          
+          
+     
+          .print-button{
+              visibility: hidden;
+             
+          }
+      }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/"><h2 id="h2">EduPlanner </h2></a> 
+     <div ><ul >
+         <li class="list">
+             <a href="/">Home</a>
+             <a href="{{ url_for('submit_subject') }}">Subjects</a>
+             <a href="{{ url_for('table1') }}">Timetable</a>
+            <a href="#contact">Contacts</a>
+ 
+         </li>
+         
+     </ul>   
+        
+     </div>
+    
+ </nav>
+    <!-- Your existing navigation bar and other elements -->
+
+    <!-- Tabular format for enrolled options -->
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>9.00 am to 10.00 am </td>
+                {% for day, time_slots in timetable.items() %}
+                    <td>
+                        {% for time_slot, options in time_slots.items() %}
+                            {% if time_slot == '9.00 am to 10.00 am' %}
+                                {% for option in options %}
+                                    {{ option }}
+                                    <br>
+                                {% endfor %}
+                            {% else %}
+                                 
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+              <td>10.00 am to 11.00 am</td>
+              {% for day, time_slots in timetable.items() %}
+                  <td>
+                      {% for time_slot, options in time_slots.items() %}
+                          {% if time_slot == '10.00 am to 11.00 am' %}
+                              {% for option in options %}
+                                  {{ option }}
+                                  <br>
+                              {% endfor %}
+                          {% else %}
+                               
+                          {% endif %}
+                      {% endfor %}
+                  </td>
+              {% endfor %}
+          </tr>
+          <tr>
+            <td>11.15 am to 12.15 pm </td>
+            {% for day, time_slots in timetable.items() %}
+                <td>
+                    {% for time_slot, options in time_slots.items() %}
+                        {% if time_slot == '11.15 am to 12.15 pm' %}
+                            {% for option in options %}
+                                {{ option }}
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                             
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+          <td>12.15 pm to 1.15 pm </td>
+          {% for day, time_slots in timetable.items() %}
+              <td>
+                  {% for time_slot, options in time_slots.items() %}
+                      {% if time_slot == '12.15 pm to 1.15 pm' %}
+                          {% for option in options %}
+                              {{ option }}
+                              <br>
+                          {% endfor %}
+                      {% else %}
+                           
+                      {% endif %}
+                  {% endfor %}
+              </td>
+          {% endfor %}
+      </tr>
+      <tr>
+        <td>1.45 pm to 2.45 pm</td>
+        {% for day, time_slots in timetable.items() %}
+            <td>
+                {% for time_slot, options in time_slots.items() %}
+                    {% if time_slot == '1.45 pm to 2.45 pm' %}
+                        {% for option in options %}
+                            {{ option }}
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                         
+                    {% endif %}
+                {% endfor %}
+            </td>
+        {% endfor %}
+    </tr>
+    <tr>
+      <td>1.45 pm to 2.45 pm </td>
+      {% for day, time_slots in timetable.items() %}
+          <td>
+              {% for time_slot, options in time_slots.items() %}
+                  {% if time_slot == '2.45 pm to 3.45 pm' %}
+                      {% for option in options %}
+                          {{ option }}
+                          <br>
+                      {% endfor %}
+                  {% else %}
+                       
+                  {% endif %}
+              {% endfor %}
+          </td>
+      {% endfor %}
+  </tr>
+  <tr>
+    <td>3.45 pm to 4.45 pm </td>
+    {% for day, time_slots in timetable.items() %}
+        <td>
+            {% for time_slot, options in time_slots.items() %}
+                {% if time_slot == '3.45 pm to 4.45 pm' %}
+                    {% for option in options %}
+                        {{ option }}
+                        <br>
+                    {% endfor %}
+                {% else %}
+                     
+                {% endif %}
+            {% endfor %}
+        </td>
+    {% endfor %}
+</tr>
+<tr>
+  <td>4.45 pm to 5.45 pm </td>
+  {% for day, time_slots in timetable.items() %}
+      <td>
+          {% for time_slot, options in time_slots.items() %}
+              {% if time_slot == '4.45 pm to 5.45 pm' %}
+                  {% for option in options %}
+                      {{ option }}
+                      <br>
+                  {% endfor %}
+              {% else %}
+                   
+              {% endif %}
+          {% endfor %}
+      </td>
+  {% endfor %}
+</tr>
+
+            <!-- Repeat the same structure for other time slots -->
+        </tbody>
+    </table>
+    <button class="print-button" onclick="printPage()">Print</button>
+
+      <script>
+      function printPage() {
+      window.print(); 
+      }
+  </script>
+</body>
+</html>

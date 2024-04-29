@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask-Dropzone Demo: Drag and Drop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}" class="style">
+</head>
+<body>
+
+<div class="container">
+    <table style="border: 1px solid black;" class="sub_list">
+        <tr>
+            <th>Subject Lists</th>
+        </tr>
+        {% for posts in slots_data %}
+        <tr>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_' ~ loop.index }}" data-toggle="dropdown">{{ posts.subject_slot }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_' ~ loop.index }}">
+                        {% for post in slots_data %}
+                        <li role="presentation" draggable="true" ondragstart="dragOption(event, '{{ post.slot_data }}', '{{ 'menu_' ~ loop.index }}')">{{ post.slot_data }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        
+        {% for subject in subjects %}
+        <tr class="tr2">
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="{{ 'menu_subject_' ~ subject.id }}" data-toggle="dropdown">{{ subject.subject }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{ 'menu_subject_' ~ subject.id }}">
+                        <li role="presentation" draggable="true" ondragstart="dragOption(event, '{{ subject.slot_data }}', '{{ 'menu_subject_' ~ subject.id }}')">{{ subject.slot_data }}</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        
+    </table>
+</div>
+
+<div class="container">
+    <div id="dropzone" class="dropzone" ondrop="dropOption(event)" ondragover="allowDrop(event)">
+        <h3>Selected Options</h3>
+        <ul id="selected-options"></ul>
+    </div>
+</div>
+
+<div class="container">
+    <button id="delete-option" class="btn btn-danger" style="margin-top: 10px;">Delete Selected Option</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+    var selectedOptions = {}; // Object to store selected options from each dropdown
+
+    function dragOption(ev, option, dropdownId) {
+        ev.dataTransfer.setData("text", option);
+        ev.dataTransfer.setData("dropdownId", dropdownId); // Set the dropdown ID as well
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function dropOption(ev) {
+        ev.preventDefault();
+        var option = ev.dataTransfer.getData("text");
+        var dropzone = document.getElementById("selected-options");
+        var dropdownId = ev.dataTransfer.getData("dropdownId"); // Get the dropdown ID
+
+        if (!selectedOptions[dropdownId]) {
+            // If no option is selected from this dropdown yet, select the current option
+            selectedOptions[dropdownId] = option;
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(option));
+            dropzone.appendChild(li);
+            document.getElementById(dropdownId).disabled = true; // Disable the dropdown
+        } else {
+            // If an option is already selected from this dropdown, alert and don't change the selection
+            alert("Option already selected from this dropdown! Please select a different option.");
+        }
+    }
+
+    $('#delete-option').click(function () {
+        var dropzone = document.getElementById("selected-options");
+        dropzone.innerHTML = ""; // Clear all selected options
+        selectedOptions = {}; // Reset selected options
+        var dropdowns = document.querySelectorAll(".dropdown button");
+        dropdowns.forEach(function(dropdown) {
+            dropdown.disabled = false; // Enable all dropdowns
+        });
+    });
+</script>
+
+</body>
+</html>

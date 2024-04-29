@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPlanner</title>
+    
+</head>
+<body>
+
+        
+<div class="container"><nav class="navbar">
+   <a href="/"><h2 id="h2">EduPlanner </h2></a> 
+    <div ><ul >
+        <li class="list">
+            <a href="/">Home</a>
+            <a href="/templates/subject.html">Subjects</a>
+            <a href="{{ url_for('table1') }}">Timetable</a>
+
+           <a href="#contact">Contacts</a>
+
+        </li>
+        
+    </ul>   
+       
+    </div>
+   
+</nav>
+
+
+{% block body %} {% endblock %}
+
+
+
+</body>
+</html>

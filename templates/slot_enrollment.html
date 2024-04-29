@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Users enrolled for {{ slot_data }} on {{ day }} at {{ time }} in {{ room }}</h1>
+<ul>
+    {% for enrollment in slot_enrollment %}
+        <li>{{ enrollment.user_email }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
